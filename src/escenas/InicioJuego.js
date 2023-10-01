@@ -8,6 +8,10 @@ class InicioJuego extends Phaser.Scene {
         // Precargar la imagen de fondo y el botón
         this.load.image('fondo', '../public/img/fondoInicio.png');
         this.load.image('boton', '../public/img/boton.png');
+
+        this.load.audio('menuAudio', '../public/sound/menuMusic.mp3');
+        this.load.audio('gameAudio', '../public/sound/gamePlay.mp3');
+
     }
 
     create() {
@@ -19,6 +23,7 @@ class InicioJuego extends Phaser.Scene {
         // Calcula el centro de la pantalla
         let centerX = this.cameras.main.width / 2;
         let centerY = this.cameras.main.height / 2;
+
 
         // Crea el botón "Iniciar juego"
         let boton = this.add.image(centerX, centerY, 'boton');
@@ -55,6 +60,9 @@ class InicioJuego extends Phaser.Scene {
     cambiarEscena() {
         //cambiar a la siguiente escena
         this.scene.start('Escena1');
+
+        this.musica = this.sound.add('gameAudio');
+        this.musica.play();
     }
 }
 

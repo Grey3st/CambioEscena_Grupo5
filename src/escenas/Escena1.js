@@ -14,6 +14,8 @@ class Escena1 extends Phaser.Scene {
         this.load.image('star', '../public/img/star.png');
         this.load.image('bomb', '../public/img/bomb.png');
         this.load.spritesheet('dude', '../public/img/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+        this.load.audio('lost', '../public/sound/gameOverMusic.mp3');
     }
 
     create() {
@@ -23,6 +25,7 @@ class Escena1 extends Phaser.Scene {
         this.platforms.create(600, 400, 'ground');
         this.platforms.create(50, 250, 'ground');
         this.platforms.create(750, 220, 'ground');
+
 
         //--------------------------------------------//
         // this.add.image(400, 300, 'star');    crea una estrella estatica en el escenario 
@@ -125,7 +128,12 @@ class Escena1 extends Phaser.Scene {
         this.physics.pause();
         player.setTint(0xff0000);
         player.anims.play('turn');
+
+
+        this.musicaLost = this.sound.add('lost');
+        this.musicaLost.play();
         this.scene.start('FinDelJuego')   // llama a otra escena 
+
     }
 
 }
