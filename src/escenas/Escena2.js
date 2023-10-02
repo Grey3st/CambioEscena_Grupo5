@@ -16,8 +16,15 @@ class Escena2 extends Phaser.Scene{
         this.load.image('star', '../public/img/star.png');
         this.load.image('bomb', '../public/img/bomb.png');
         this.load.spritesheet('dude', '../public/img/dude.png', { frameWidth: 32, frameHeight: 48 });
+
+        this.load.audio('lost', '../public/sound/gameOverMusic.mp3');
+        this.load.audio('gameMusic', '../public/sound/gamePlay.mp3');
     }
     create(){
+        
+        this.gameMusic = this.sound.add('gameMusic');
+        this.gameMusic.play();
+        this.musicaLost = this.sound.add('lost');
         
         this.add.image(400, 300, 'sky');
         this.platforms = this.physics.add.staticGroup();
@@ -147,6 +154,8 @@ class Escena2 extends Phaser.Scene{
         this.physics.pause();
         player.setTint(0xff0000);
         player.anims.play('turn');
+        this.gameMusic.destroy();
+        this.musicaLost.play();
         this.scene.start('FinDelJuego')   // llama a otra escena 
     }
 }
