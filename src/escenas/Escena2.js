@@ -131,7 +131,7 @@ class Escena2 extends Phaser.Scene{
         this.scoreText.setText('Score: ' + this.score);
 
         //Para las bombas
-        if (this.stars.countActive(true) >= 0) {//this.stars.countActive(true) === 0
+        if (this.stars.countActive(true) >= 0) {//this.stars.countActive(true) === 0//
             this.stars.children.iterate(function (child) {
                 child.enableBody(true, child.x, 0, true, true);
             });
