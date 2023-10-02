@@ -83,7 +83,7 @@ class Escena2 extends Phaser.Scene{
         this.bombs = this.physics.add.group();
         this.physics.add.collider(this.bombs, this.platforms);
         this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
-        console.log("funciona");
+        console.log("Cambio Escena2");
         
     }
     update(){
