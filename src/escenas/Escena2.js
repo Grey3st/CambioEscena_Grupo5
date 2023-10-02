@@ -1,34 +1,36 @@
-class Escena1 extends Phaser.Scene {
 
-    constructor() {
-        super({key:"Escena1"});
+class Escena2 extends Phaser.Scene{
+    
+    constructor(){
+        super({key:"Escena2"});
         this.platforms = null;
         this.scoreText = "";
         this.score = 0;
-
+        
     }
+    preload(){
+        
 
-    preload() {
         this.load.image('sky', '../public/img/sky.png');
         this.load.image('ground', '../public/img/platform.png');
         this.load.image('star', '../public/img/star.png');
         this.load.image('bomb', '../public/img/bomb.png');
         this.load.spritesheet('dude', '../public/img/dude.png', { frameWidth: 32, frameHeight: 48 });
-
-        this.load.audio('lost', '../public/sound/gameOverMusic.mp3');
     }
-
-    create() {
+    create(){
+        
         this.add.image(400, 300, 'sky');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
-        this.platforms.create(600, 400, 'ground');
-        this.platforms.create(50, 250, 'ground');
-        this.platforms.create(750, 220, 'ground');
-
-
+        this.plataforma1=this.platforms.create(600, 400, 'ground');
+        this.plataforma2=this.platforms.create(50, 300, 'ground');
+        this.plataforma3=this.platforms.create(750, 220, 'ground');
+        
+        
+        
+        
         //--------------------------------------------//
-        // this.add.image(400, 300, 'star');    crea una estrella estatica en el escenario 
+        //this.add.image(400, 300, 'star');    crea una estrella estatica en el escenario 
         this.player = this.physics.add.sprite(100, 100, 'dude');
         //-------------------------//
         this.player.setBounce(0.2);
@@ -81,11 +83,10 @@ class Escena1 extends Phaser.Scene {
         this.bombs = this.physics.add.group();
         this.physics.add.collider(this.bombs, this.platforms);
         this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
-
+        console.log("Cambio Escena2");
+        
     }
-
-    //------------------------//
-    update() {
+    update(){
         if (this.cursors.left.isDown) {
             this.player.setVelocityX(-160);
             this.player.anims.play('left', true);
@@ -101,12 +102,26 @@ class Escena1 extends Phaser.Scene {
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-330);
         }
-        if (this.score===20){
-            this.scene.start('Escena2');
-            //this.scene.start('End',{puntaje:this.puntaje}); PARA LLEVAR EL PUNTAJE
+        
+        this.plataforma1.x-=2;
+        this.plataforma1.body.x-=2;
+        if (this.plataforma1.body.x<=-250 && this.plataforma1.x <=-250) {
+            this.plataforma1=this.platforms.create(900, 400, 'ground');
         }
-    }
 
+        this.plataforma2.x+=5;
+        this.plataforma2.body.x+=5;
+        if (this.plataforma2.body.x>=800) {
+            this.plataforma2=this.platforms.create(-150, 300, 'ground');
+        }
+
+        this.plataforma3.x-=2;
+        this.plataforma3.body.x-=2;
+        if (this.plataforma3.body.x<=-400) {
+            this.plataforma3=this.platforms.create(1000, 220, 'ground');
+        }
+       
+    }
     //Colisión entre el jugador y las estrellas
     collectStar(player, star) {
         star.disableBody(true, true);
@@ -126,20 +141,14 @@ class Escena1 extends Phaser.Scene {
         }
         
     }
-    
 
 
     hitBomb(player, bomb) {
         this.physics.pause();
         player.setTint(0xff0000);
         player.anims.play('turn');
-
-
-        this.musicaLost = this.sound.add('lost');
-        this.musicaLost.play();
         this.scene.start('FinDelJuego')   // llama a otra escena 
-
     }
-
 }
-export default Escena1;
+
+export default Escena2;
