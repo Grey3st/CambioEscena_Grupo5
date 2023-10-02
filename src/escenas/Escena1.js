@@ -15,10 +15,14 @@ class Escena1 extends Phaser.Scene {
         this.load.image('bomb', '../public/img/bomb.png');
         this.load.spritesheet('dude', '../public/img/dude.png', { frameWidth: 32, frameHeight: 48 });
 
-        this.load.audio('lost', '../public/sound/gameOverMusic.mp3');
+        this.load.audio('gameMusic', '../public/sound/gamePlay.mp3');
     }
 
     create() {
+
+        this.gameMusic = this.sound.add('gameMusic');
+        this.gameMusic.play();
+
         this.add.image(400, 300, 'sky');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
@@ -101,7 +105,8 @@ class Escena1 extends Phaser.Scene {
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-330);
         }
-        if (this.score===20){
+        if (this.score==20){
+            this.gameMusic.destroy();
             this.scene.start('Escena2');
             //this.scene.start('End',{puntaje:this.puntaje}); PARA LLEVAR EL PUNTAJE
         }
@@ -133,10 +138,6 @@ class Escena1 extends Phaser.Scene {
         this.physics.pause();
         player.setTint(0xff0000);
         player.anims.play('turn');
-
-
-        this.musicaLost = this.sound.add('lost');
-        this.musicaLost.play();
         this.scene.start('FinDelJuego')   // llama a otra escena 
 
     }

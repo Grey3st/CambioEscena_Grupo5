@@ -1,19 +1,14 @@
-import ButtonRestard from "../../componentes/boton.js";
-
 class FinDelJuego extends Phaser.Scene{
     
     constructor(){
         super({key:'FinDelJuego'})
-        this.ButtonRestard = new ButtonRestard(this);
     }
     preload(){
      this.load.image('fondo',"../public/img/fondoInicio.png")
      this.load.image('fin',"../public/img/finJuego.png")
-     this.ButtonRestard.preload();
     }
     
     create(){
-        
         let fondo = this.add.image(0,0,'fondo');
         fondo.setOrigin(0,0);
    //--------//
@@ -23,8 +18,6 @@ class FinDelJuego extends Phaser.Scene{
        let fin = this.add.image(centerX,centerY,'fin');
        fin.setScale(0.2)
         console.log("Pal lobby malo *c rie en brazuca*")
-        this.ButtonRestard.create();
-        
     }
 
 }

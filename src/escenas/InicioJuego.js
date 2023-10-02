@@ -2,6 +2,7 @@ class InicioJuego extends Phaser.Scene {
 
     constructor() {
         super({ key: 'InicioJuego' });
+        
     }
 
     preload() {
@@ -10,11 +11,28 @@ class InicioJuego extends Phaser.Scene {
         this.load.image('boton', '../public/img/boton.png');
 
         this.load.audio('menuAudio', '../public/sound/menuMusic.mp3');
-        this.load.audio('gameAudio', '../public/sound/gamePlay.mp3');
 
     }
 
     create() {
+
+    //Musiquita del menu, inicia al hacer click sobre la pantalla
+        this.musicaMenu = this.sound.add('menuAudio');
+        const soundConfig = {
+            volume: 1,
+            loop: true
+        }
+        
+        if (!this.musicaMenu.locked) {
+            this.musicaMenu.play(soundConfig);
+        }
+        else{
+            this.musicaMenu.once(Phaser.Sound.UNLOCKED, () =>{
+                this.musicaMenu.play(soundConfig);
+            })
+        }
+
+
         // Agrega la imagen de fondo
         let fondo = this.add.image(0, 0, 'fondo');
         fondo.setOrigin(0, 0); // Establece el origen en la esquina superior izquierda
@@ -37,16 +55,6 @@ class InicioJuego extends Phaser.Scene {
             console.log("¡El juego ha comenzado!");
         }, this); // 'this' para hacer referencia a la escena actual sino no permite acceder a la wea de escena 
 
-
-        // Añade texto al botón era por si no encontraba un png piola
-        // let textoBoton = this.add.text(centerX - 60, centerY - 100, 'Juegazo', {
-          //  fontSize: '24px',
-           // fill: '#fff'
-        //});
-
-        // Ajusta el texto al centro del botón
-        //Phaser.Display.Align.In.Center(textoBoton, boton);
-
         // Haz que el cursor cambie al pasar sobre el botón osea que la flechita se convierta en la manito xd
         boton.on('pointerover', function () {
             document.body.style.cursor = 'pointer';
@@ -55,14 +63,12 @@ class InicioJuego extends Phaser.Scene {
         boton.on('pointerout', function () {
             document.body.style.cursor = 'default';
         });
-    }
-
+        }
+        
     cambiarEscena() {
         //cambiar a la siguiente escena
         this.scene.start('Escena1');
-
-        this.musica = this.sound.add('gameAudio');
-        this.musica.play();
+        this.musicaMenu.destroy();
     }
 }
 
