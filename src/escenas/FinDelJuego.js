@@ -1,15 +1,15 @@
-import ButtonRestard from "../../componentes/boton.js";
+import ButtonRestard from "../../componentes/boton.js";//Traemos un componente que funciona como boton
 
 class FinDelJuego extends Phaser.Scene{
     
     constructor(){
         super({key:'FinDelJuego'})
-        this.ButtonRestard = new ButtonRestard(this);
+        this.ButtonRestard = new ButtonRestard(this);//objeto de ButtonRestard asignado a una propiedad de esta class(FinDelJuego), por el (this)
     }
     preload(){
      this.load.image('fondo',"../public/img/fondoInicio.png")
      this.load.image('fin',"../public/img/finJuego.png")
-     this.ButtonRestard.preload();
+     this.ButtonRestard.preload();//Se llama al metodo preload() de ButtonRestard
     }
     
     create(){
@@ -23,7 +23,7 @@ class FinDelJuego extends Phaser.Scene{
        let fin = this.add.image(centerX,centerY,'fin');
        fin.setScale(0.2)
         console.log("Pal lobby malo *c rie en brazuca*")
-        this.ButtonRestard.create();
+        this.ButtonRestard.create();//Se llama al metodo create() de ButtonRestard
         
     }
 

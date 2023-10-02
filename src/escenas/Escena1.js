@@ -26,7 +26,7 @@ class Escena1 extends Phaser.Scene {
 
         //--------------------------------------------//
         // this.add.image(400, 300, 'star');    crea una estrella estatica en el escenario 
-        this.player = this.physics.add.sprite(100, 100, 'dude');
+        this.player = this.physics.add.sprite(400, 450, 'dude');//Se cambio la posicion donde nace 'dude'
         //-------------------------//
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
@@ -57,7 +57,7 @@ class Escena1 extends Phaser.Scene {
         this.stars = this.physics.add.group({
             key: 'star',
             repeat: 5, // cantidad de estrellas
-            setXY: { x: 12, y: 0, stepX: 70 } // empieza en la posición x e y, se repite cada 70 en x
+            setXY: { x: 120, y: 0, stepX: 116 } // empieza en la posición x(120) e y(0), se repite cada 116 en x
         });
 
         //Se agrega el rebote entre el grupo de estrelas
@@ -98,7 +98,8 @@ class Escena1 extends Phaser.Scene {
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-330);
         }
-        if (this.score===20){
+        /**Al llegar a cierto puntaje se cambia a Escena2 */
+        if (this.score===60){
             this.scene.start('Escena2');
             //this.scene.start('End',{puntaje:this.puntaje}); PARA LLEVAR EL PUNTAJE
         }
@@ -111,7 +112,8 @@ class Escena1 extends Phaser.Scene {
         this.scoreText.setText('Score: ' + this.score);
 
         //Para las bombas
-        if (this.stars.countActive(true) === 0) {
+        //Cada vez que se agarra una estrella se genera una bomba, y se reinicia la caida de estrellas
+        if (this.stars.countActive(true) >= 0) {//this.stars.countActive(true) === 0
             this.stars.children.iterate(function (child) {
                 child.enableBody(true, child.x, 0, true, true);
             });

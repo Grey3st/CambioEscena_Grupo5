@@ -22,6 +22,7 @@ class Escena2 extends Phaser.Scene{
         this.add.image(400, 300, 'sky');
         this.platforms = this.physics.add.staticGroup();
         this.platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+        /**Se guarda cada platform en una variable diferente */
         this.plataforma1=this.platforms.create(600, 400, 'ground');
         this.plataforma2=this.platforms.create(50, 300, 'ground');
         this.plataforma3=this.platforms.create(750, 220, 'ground');
@@ -31,7 +32,7 @@ class Escena2 extends Phaser.Scene{
         
         //--------------------------------------------//
         //this.add.image(400, 300, 'star');    crea una estrella estatica en el escenario 
-        this.player = this.physics.add.sprite(100, 100, 'dude');
+        this.player = this.physics.add.sprite(400, 450, 'dude');
         //-------------------------//
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
@@ -62,7 +63,7 @@ class Escena2 extends Phaser.Scene{
         this.stars = this.physics.add.group({
             key: 'star',
             repeat: 5, // cantidad de estrellas
-            setXY: { x: 12, y: 0, stepX: 70 } // empieza en la posición x e y, se repite cada 70 en x
+            setXY: { x: 120, y: 0, stepX: 116 } // empieza en la posición x(120) e y(0), se repite cada 116 en x
         });
 
         //Se agrega el rebote entre el grupo de estrelas
@@ -83,7 +84,7 @@ class Escena2 extends Phaser.Scene{
         this.bombs = this.physics.add.group();
         this.physics.add.collider(this.bombs, this.platforms);
         this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
-        console.log("Cambio Escena2");
+        
         
     }
     update(){
@@ -102,7 +103,8 @@ class Escena2 extends Phaser.Scene{
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-330);
         }
-        
+        /**Se agrega movimiento a cada platform */
+        /**Colocar dentro de un metodo() */
         this.plataforma1.x-=2;
         this.plataforma1.body.x-=2;
         if (this.plataforma1.body.x<=-250 && this.plataforma1.x <=-250) {
@@ -129,7 +131,7 @@ class Escena2 extends Phaser.Scene{
         this.scoreText.setText('Score: ' + this.score);
 
         //Para las bombas
-        if (this.stars.countActive(true) === 0) {
+        if (this.stars.countActive(true) >= 0) {//this.stars.countActive(true) === 0
             this.stars.children.iterate(function (child) {
                 child.enableBody(true, child.x, 0, true, true);
             });
