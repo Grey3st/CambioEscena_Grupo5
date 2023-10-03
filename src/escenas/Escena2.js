@@ -68,8 +68,15 @@ class Escena2 extends Phaser.Scene{
         // Se agregan las estrellas
         this.stars = this.physics.add.group({
             key: 'star',
-            repeat: 5, // cantidad de estrellas
-            setXY: { x: 12, y: 0, stepX: 70 } // empieza en la posición x e y, se repite cada 70 en x
+            repeat: 5, // Cantidad de estrellas
+            setXY: { x: 0, y: 0, stepX:Phaser.Math.RND.between(70,150) } // Inicialmente, las posiciones X e Y no importan
+        });
+
+        // Luego, configuramos las posiciones aleatorias solo en el eje X
+        this.stars.children.iterate(function (star) {
+            star.x = Phaser.Math.RND.between(0, 600); // Posición X aleatoria
+            star.y = 0; // Mantenemos la misma posición Y en 0
+            star.stepX = Phaser.Math.RND.between(70, 150); // Espaciado X aleatorio
         });
 
         //Se agrega el rebote entre el grupo de estrelas
