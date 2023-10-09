@@ -105,10 +105,10 @@ class Escena1 extends Phaser.Scene {
         if (this.cursors.up.isDown && this.player.body.touching.down) {
             this.player.setVelocityY(-330);
         }
-        if (this.score==20){
+        if (this.score==60){
             this.gameMusic.destroy();
-            this.scene.start('Escena2');
-            //this.scene.start('End',{puntaje:this.puntaje}); PARA LLEVAR EL PUNTAJE
+            //this.scene.start('Escena2');
+            this.scene.start('Escena2',{score:this.score}); 
         }
     }
 
