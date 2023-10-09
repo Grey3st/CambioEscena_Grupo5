@@ -8,6 +8,10 @@ class Escena2 extends Phaser.Scene{
         this.score = 0;
         
     }
+    //Se pasa el puntaje de escena1 a escena2
+    init(data){
+        this.score = data.score;
+    }
     preload(){
         
 
@@ -20,6 +24,8 @@ class Escena2 extends Phaser.Scene{
         this.load.audio('lost', '../public/sound/gameOverMusic.mp3');
         this.load.audio('gameMusic', '../public/sound/gamePlay.mp3');
     }
+
+
     create(){
         
         this.gameMusic = this.sound.add('gameMusic');
@@ -91,13 +97,13 @@ class Escena2 extends Phaser.Scene{
         this.physics.add.overlap(this.player, this.stars, this.collectStar, null, this);
 
         //Para controlar el puntaje
-        this.scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+        this.scoreText = this.add.text(16, 16, 'score: '+ this.score, { fontSize: '32px', fill: '#000' });
 
         //Para agregar las bombas
         this.bombs = this.physics.add.group();
         this.physics.add.collider(this.bombs, this.platforms);
         this.physics.add.collider(this.player, this.bombs, this.hitBomb, null, this);
-        console.log("Cambio Escena2");
+        
         
     }
     update(){
@@ -149,9 +155,13 @@ class Escena2 extends Phaser.Scene{
             });
             let x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400)
             let bomb = this.bombs.create(x, 16, 'bomb');
-            bomb.setBounce(1);
             bomb.setCollideWorldBounds(true);
             bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+            bomb.setBounce(1);
+            // Se agregan minas terrestres para agregar dificultad
+            let bomb2 = this.bombs.create(x, 0, 'bomb');
+            bomb2.setCollideWorldBounds(true);
+            bomb2.setVelocity(0, 100);
         }
         
     }
